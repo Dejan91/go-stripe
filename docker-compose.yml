@@ -5,10 +5,23 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    links:
+      - db
   db:
     image: mariadb:10
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: password
+      MARIADB_ROOT_HOST: localhost
+      MARIADB_USER: dejan
+      MARIADB_PASSWORD: password
+      MARIADB_DATABASE: go-stripe
     volumes:
-      - db
+      - db:/var/lib/mysql
 
 volumes:
   db:

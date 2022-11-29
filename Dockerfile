@@ -1,7 +1,12 @@
-FROM golang:1.19.3-alpine
+FROM golang:1.19.4-alpine
 
 WORKDIR /app
 
-COPY go.mod ./
-COPY go.sum ./
-RUN go mod download
+COPY . .
+RUN go mod tidy
+
+EXPOSE 3000
+
+WORKDIR /app/cmd/web
+
+RUN go build -o /build
