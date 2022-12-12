@@ -1,1 +1,3 @@
 .idea/
+cmd/web/tmp
+cmd/api/tmp

@@ -1,12 +1,18 @@
-FROM golang:1.19.4-alpine
+FROM golang:1.19.4-alpine as base
 
 WORKDIR /app
+
+RUN go install github.com/cosmtrek/air@latest
 
 COPY . .
 RUN go mod tidy
 
-EXPOSE 3000
+FROM base as web
 
 WORKDIR /app/cmd/web
+CMD ["air", "-c", ".air.toml"]
 
-RUN go build -o /build
+FROM base as api
+
+WORKDIR /app/cmd/api
+CMD ["air", "-c", ".air.toml"]

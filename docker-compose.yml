@@ -4,11 +4,21 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
+      target: web
     volumes:
-      - .:/app
+      - ./:/app
     ports:
-      - "3000:3000"
+      - "4000:4000"
+    links:
+      - db
+  api:
+    build:
+      context: .
+      target: api
+    volumes:
+      - ./:/app
+    ports:
+      - "4001:4001"
     links:
       - db
   db:
